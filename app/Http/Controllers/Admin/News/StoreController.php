@@ -19,14 +19,7 @@ class StoreController extends Controller
         unset($validatedData['tags']);
         $validatedData['image'] = Storage::disk('public')->put('/images', $validatedData['image']);
         $convertedTags = explode(',',$validatedTags);
-        $allTags = TagsNews::pluck('title')->toArray();
-        foreach ($convertedTags as $tag)
-        {
-            if (in_array($tag, $allTags))
-            {
-                $existingTags[] = $tag;
-            }
-        }
+        $existingTags = $service->ifExist($convertedTags);
         if (empty($existingTags)){
             $modifiedContent = $service->checkContent($validatedData['content']);
             $validatedData['content'] = $modifiedContent;
@@ -35,6 +28,6 @@ class StoreController extends Controller
             $service->addLinks($convertedTags);
             return redirect()->route('new.index');
         }
-        return back()->withErrors(['tags'=>"Не використовуйте ці теги, вони пов'язані з іншою новиною ".implode(", ", $existingTags)]);
+        return back()->withErrors(['tags'=>"Не використовуйте ці теги, вони пов'язані з іншою новиною: ".implode(", ", $existingTags)]);
     }
 }

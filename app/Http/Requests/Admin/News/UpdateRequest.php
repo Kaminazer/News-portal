@@ -23,7 +23,7 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'max:255', 'unique:new,title'],
+            'title' => ['required', 'string', 'max:255', Rule::unique('new','title')->ignore($this->new)],
             'content' => ['required', 'string'],
             'image' => ['required', 'mimes:jpg,bmp,png,jpeg,webp,svg', 'max:2048'],
             'tags' => ['required', 'string', 'regex:/^[\w+,]+$/u'],

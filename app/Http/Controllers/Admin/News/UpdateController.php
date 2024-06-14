@@ -17,20 +17,23 @@ class UpdateController extends Controller
         $validatedTags = explode(',', $validatedData['tags']);
         unset($validatedData['tags']);
         $validatedData['image'] = Storage::disk('public')->put('/images', $validatedData['image']);
-
         $previousTags = $new->tags->pluck('title')->toArray();
-        $deletedTags = array_diff($previousTags, $validatedTags);
-        $newTags = array_diff($validatedTags, $previousTags);
-        if (!empty($deletedTags)){
-            $service->deleteLinks($deletedTags);
-            $service->deleteTags($deletedTags);
+        $existingTags = $service->ifExist(array_diff($validatedTags, $previousTags));
+        if(empty($existingTags)) {
+            $deletedTags = array_diff($previousTags, $validatedTags);
+            $newTags = array_diff($validatedTags, $previousTags);
+            if (!empty($deletedTags)){
+                $service->deleteLinks($deletedTags);
+                $service->deleteTags($deletedTags);
+            }
+            if(!empty($newTags)){
+                $service->createTag($newTags, $new);
+                $service->addLinks($newTags);
+            }
+            $validatedData['content'] = $service->checkContent($validatedData['content']);
+            $new->update($validatedData);
+            return redirect()->route('new.show', $new->id);
         }
-        if(!empty($newTags)){
-            $service->addLinks($newTags);
-            $service->createTag($validatedTags, $new);
-        }
-        $validatedData['content'] = $service->checkContent($validatedData['content']);
-        $new->update($validatedData);
-        return redirect()->route('new.show', $new->id);
+        return back()->withErrors(['tags'=>"Не використовуйте ці теги, вони пов'язані з іншою новиною: ".implode(", ", $existingTags)]);
     }
 }

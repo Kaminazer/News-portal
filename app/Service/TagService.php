@@ -78,4 +78,17 @@ class TagService
             ]);
         }
     }
+
+    public function ifExist($tags){
+        $allTags = TagsNews::pluck('title')->toArray();
+        $existingTags = [];
+        foreach ($tags as $tag)
+        {
+            if (in_array($tag, $allTags))
+            {
+                $existingTags[] = $tag;
+            }
+        }
+    return $existingTags;
+    }
 }

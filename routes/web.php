@@ -19,6 +19,7 @@ Route::group([
     'middleware' => 'auth',
     'as' => 'admin.new.'],
     function (){
+        Route::get('/', 'IndexController')->name('index');
         Route::get('create', 'CreateController')->name('create');
         Route::post('store', 'StoreController')->name('store');
         Route::get('{new}/edit', 'EditController')->name('edit');

@@ -17,17 +17,19 @@
     <!-- Scripts -->
     @vite(['resources/js/app.js'])
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="d-flex flex-column h-screen">
     <div class="container-fluid">
         <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-            <ul class="navbar-nav">
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">{{__("Profile")}}</a>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <ul class="navbar-nav d-flex justify-content-center">
+                @auth()
+                <li class="nav-item d-sm-block">
+                    <a href="{{route('admin.new.index')}}" class="nav-link">{{__("Адмін панель")}}</a>
                 </li>
+                @endauth()
 
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="{{route('new.index')}}" class="nav-link">{{__("News")}}</a>
+                <li class="nav-item d-sm-block">
+                    <a href="{{route('new.index')}}" class="nav-link">{{__("Новини")}}</a>
                 </li>
             </ul>
         </nav>
@@ -35,9 +37,9 @@
             @yield('content')
         </div>
         <!-- Main Footer -->
-        <footer class="main-footer">
+        <footer class="footer-dark mt-auto">
             All rights reserved.
-            <div class="float-right d-none d-sm-inline-block">
+            <div class="float-end d-sm-block">
                 <b>Version</b> 1.0.0
             </div>
         </footer>
