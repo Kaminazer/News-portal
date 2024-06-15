@@ -15,6 +15,7 @@
             </div>
         </div><!-- /.row -->
         <div class="container">
+            @auth()
             <div class="btn-group mb-3">
                 <div class="col-2  btn btn-primary pt-1 me-1 rounded">
                     <a href="{{route('admin.new.edit',$itemNews->id)}}" class="text-center text-white link-underline">{{__('Оновити')}}</a>
@@ -26,8 +27,14 @@
                         <button class= "btn btn-danger" type="submit" onclick="return confirm('Ви видалите новину остаточно. Ви впевнені ?')">Видалити</button>
                     </form>
                 </div>
+                @endauth
             </div>
-            <p class="card-subtitle mb-5" data-aos="fade-up" data-aos-delay="200">Created : {{$itemNews->created_at->format('F d,  Y')}}
+                @guest()
+                    <small class="text-danger"> Щоб видалити або змінити новину увійдіть або зареєструйтесь на сайті! </small>
+                @endguest
+
+                <p class="card-subtitle mb-5" data-aos="fade-up" data-aos-delay="200">Created : {{$itemNews->created_at->format('F d,  Y')}}</p>
+
             <section class="text-center" data-aos="fade-up" data-aos-delay="300">
                 <img src="{{asset('storage/' . $itemNews->image)}}" alt="image" class="img-thumbnail">
             </section>

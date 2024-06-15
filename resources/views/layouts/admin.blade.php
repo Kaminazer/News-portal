@@ -18,10 +18,10 @@
     @vite(['resources/js/app.js'])
 </head>
 <body class="d-flex flex-column h-screen">
-    <div class="container-fluid">
+    <div class="container-fluid bg-light">
         <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <ul class="navbar-nav d-flex justify-content-center">
+        <nav class="navbar navbar-expand-lg navbar-light d-flex justify-content-between">
+            <ul class="navbar-nav d-flex d-block">
                 @auth()
                 <li class="nav-item d-sm-block">
                     <a href="{{route('admin.new.index')}}" class="nav-link">{{__("Адмін панель")}}</a>
@@ -32,6 +32,16 @@
                     <a href="{{route('new.index')}}" class="nav-link">{{__("Новини")}}</a>
                 </li>
             </ul>
+            @if (Route::has('login'))
+                <div class="d-flex">
+                    @guest()
+                        <a href="{{ route('login') }}" class="d-block me-3 btn">Увійти</a>
+                        @if (Route::has('register'))
+                            <a href="{{ route('register') }}" class="d-block btn">Зареєструватися</a>
+                        @endif
+                    @endguest
+                </div>
+            @endif
         </nav>
         <div class="">
             @yield('content')
