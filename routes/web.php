@@ -6,10 +6,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\News\IndexController;
 use App\Http\Controllers\News\ShowController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::get('/', IndexController::class)->name('new.index');
 Route::get('new/{new}', ShowController::class)->name('new.show');
 

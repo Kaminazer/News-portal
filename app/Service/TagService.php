@@ -38,7 +38,7 @@ class TagService
                 $urlForTag = route('new.show', ["new" => $idRelatedNews]);
                 $content = preg_replace(
                     "/\b$tag->title\b/ui",
-                    "<a href = '$urlForTag' >$0</a>",
+                    "<a href = '$urlForTag' > $0 </a>",
                     $content
                 );
             }

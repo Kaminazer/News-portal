@@ -17,8 +17,8 @@
     <!-- Scripts -->
     @vite(['resources/js/app.js'])
 </head>
-<body class="d-flex flex-column h-screen">
-    <div class="container-fluid bg-light">
+<body class="d-flex flex-column h-screen bg-body-tertiary">
+    <div class="container-fluid">
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-light d-flex justify-content-between">
             <ul class="navbar-nav d-flex d-block">
@@ -43,14 +43,14 @@
                 </div>
             @endif
         </nav>
-        <div class="">
+        <div class="flex-grow-1">
             @yield('content')
         </div>
         <!-- Main Footer -->
-        <footer class="footer-dark mt-auto">
-            All rights reserved.
+        <footer class="p-3">
+            Усі права захищені
             <div class="float-end d-sm-block">
-                <b>Version</b> 1.0.0
+                <b>Версія</b> 1.0.0
             </div>
         </footer>
     </div>

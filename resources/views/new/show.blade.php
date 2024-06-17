@@ -33,7 +33,7 @@
                     <small class="text-danger"> Щоб видалити або змінити новину увійдіть або зареєструйтесь на сайті! </small>
                 @endguest
 
-                <p class="card-subtitle mb-5" data-aos="fade-up" data-aos-delay="200">Created : {{$itemNews->created_at->format('F d,  Y')}}</p>
+                <p class="card-subtitle mb-5" data-aos="fade-up" data-aos-delay="200">Створено : {{$itemNews->created_at->format('F d,  Y')}}</p>
 
             <section class="text-center" data-aos="fade-up" data-aos-delay="300">
                 <img src="{{asset('storage/' . $itemNews->image)}}" alt="image" class="img-thumbnail">

@@ -2,7 +2,7 @@
 @section('content')
     <div class="pb-3">
         <div class="row">
-            <div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">
+            <div class="sidebar border border-right col-md-3 col-lg-2 p-0">
                     <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
                         <ul class="nav flex-column">
                             <li class="nav-item">
@@ -19,8 +19,9 @@
                         </ul>
                         <ul class="nav flex-column mb-auto">
                             <li class="nav-item">
-                                <form action="{{route('logout')}}" method="post">
-                                    <button type="submit" class="nav-link d-flex align-items-center gap-2">Вийти</button>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                    <button class="btn" type="submit">{{__('Вийти')}}</button>
                                 </form>
                             </li>
                         </ul>
@@ -37,6 +38,7 @@
                             <th scope="col">ID</th>
                             <th scope="col">Заголовок</th>
                             <th scope="col">Стан новини</th>
+                            <th scope="col">Теги</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -47,6 +49,7 @@
                               <a href="{{route('new.show', $itemNews->id)}}">{{$itemNews->title}}</a>
                             </td>
                             <td>{{$itemNews->status_display ? 'Активна' : 'Неактивна'}}</td>
+                            <td>{{implode(',',$itemNews->tags->pluck('title')->toArray())}}</td>
                          </tr>
                         @endforeach
                         </tbody>
