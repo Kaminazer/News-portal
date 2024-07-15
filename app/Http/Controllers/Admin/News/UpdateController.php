@@ -16,7 +16,10 @@ class UpdateController extends Controller
         $validatedData = $request->validated();
         $validatedTags = explode(',', $validatedData['tags']);
         unset($validatedData['tags']);
-        $validatedData['image'] = Storage::disk('public')->put('/images', $validatedData['image']);
+        if (!empty($validatedData['image']))
+        {
+            $validatedData['image'] = Storage::disk('public')->put('/images', $validatedData['image']);
+        }
         $previousTags = $new->tags->pluck('title')->toArray();
         $existingTags = $service->ifExist(array_diff($validatedTags, $previousTags));
         if(empty($existingTags)) {
@@ -30,7 +33,9 @@ class UpdateController extends Controller
                 $service->createTag($newTags, $new);
                 $service->addLinks($newTags);
             }
-            $validatedData['content'] = $service->checkContent($validatedData['content']);
+            $validatedData['content'] = $service->checkContent($validatedData['content'], $deletedTags);
+
+
             $new->update($validatedData);
             return redirect()->route('new.show', $new->id);
         }

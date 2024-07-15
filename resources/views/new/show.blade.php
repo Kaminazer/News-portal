@@ -16,17 +16,17 @@
         </div><!-- /.row -->
         <div class="container">
             @auth()
-            <div class="btn-group mb-3">
-                <div class="col-2  btn btn-primary pt-1 me-1 rounded">
-                    <a href="{{route('admin.new.edit',$itemNews->id)}}" class="text-center text-white link-underline">{{__('Оновити')}}</a>
-                </div>
-                <div class="col-2">
-                    <form action="{{route('admin.new.destroy', $itemNews)}}" method="post" enctype="multipart/form-data">
-                    @csrf
-                    @method('delete')
-                        <button class= "btn btn-danger" type="submit" onclick="return confirm('Ви видалите новину остаточно. Ви впевнені ?')">Видалити</button>
-                    </form>
-                </div>
+                <div class="btn-group mb-1 pt-2 flex justify-content-around align-items-center">
+                    <div class="col-1 pt-1 me-1 rounded">
+                        <a href="{{route('admin.new.edit',$itemNews->id)}}" class="btn btn-primary text-white link-underline">{{__('Оновити')}}</a>
+                    </div>
+                    <div class="col-1">
+                        <form action="{{route('admin.new.destroy', $itemNews)}}" method="post" enctype="multipart/form-data">
+                            @csrf
+                            @method('delete')
+                            <button class= "btn btn-danger" type="submit" onclick="return confirm('Ви видалите новину остаточно. Ви впевнені ?')">Видалити</button>
+                        </form>
+                    </div>
                 @endauth
             </div>
                 @guest()

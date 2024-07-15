@@ -14,7 +14,7 @@ class TagService
             $foundedNews = $allNews->filter( function ($news) use ($tag) {
                 return preg_match_all("/\b$tag\b/ui",$news->content,$matches);
             });
-            if(!empty($foundedNews)) {
+            if($foundedNews->isNotEmpty()) {
                 foreach ($foundedNews as $itemNews) {
                     $urlForTag = route('new.show', ["new" => $instanceTag->new->id]);
                     $itemNews->content = preg_replace(
@@ -28,7 +28,7 @@ class TagService
         }
     }
 
-    public function checkContent($content)
+    public function checkContent($content, array $deletedTags = null)
     {
         $tags = TagsNews::all();
         foreach ( $tags as $tag) {
@@ -43,6 +43,11 @@ class TagService
                 );
             }
         }
+        if ($deletedTags != null) {
+            foreach ($deletedTags as $tag) {
+                $content = preg_replace("#<a [^<a]+\s*($tag)\s*</a>#ui", "$1", $content);
+            }
+        }
         return $content;
     }
 
@@ -53,13 +58,14 @@ class TagService
             $foundedNews = $allNews->filter(function ($new) use ($tag) {
              return preg_match_all("/\b$tag\b/ui", $new->content, $matches);
             });
-            if(!empty($foundedNews)){
+            if($foundedNews->isNotEmpty()){
                 foreach ($foundedNews as $itemNews) {
-                    $itemNews->content = preg_replace("#<a [^<a]+ ($tag) </a>#ui","$1", $itemNews->content);
+                    $itemNews->content = preg_replace("#<a [^<a]+\s*($tag)\s*</a>#ui","$1", $itemNews->content);
                     $itemNews->save();
                 }
             }
         }
+
     }
 
     public function deleteTags(array $deletedTags)

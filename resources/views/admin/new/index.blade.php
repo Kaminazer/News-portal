@@ -39,17 +39,34 @@
                             <th scope="col">Заголовок</th>
                             <th scope="col">Стан новини</th>
                             <th scope="col">Теги</th>
+                            <th scope="col">Дії</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($news as $itemNews)
                           <tr>
-                            <td>{{$itemNews->id}}</td>
-                            <td>
+                            <td class="pt-3">{{$itemNews->id}}</td>
+                            <td class="pt-3">
                               <a href="{{route('new.show', $itemNews->id)}}">{{$itemNews->title}}</a>
                             </td>
-                            <td>{{$itemNews->status_display ? 'Активна' : 'Неактивна'}}</td>
-                            <td>{{implode(',',$itemNews->tags->pluck('title')->toArray())}}</td>
+                            <td class="pt-3">{{$itemNews->status_display ? 'Активна' : 'Неактивна'}}</td>
+                            <td class="pt-3">{{implode(',',$itemNews->tags->pluck('title')->toArray())}}</td>
+                              <td>
+                                  @auth()
+                                      <div class="btn-group mb-1 pt-2 flex justify-content-between align-items-center">
+                                          <div class="col-1 pt-1 me-1 rounded">
+                                              <a href="{{route('admin.new.edit',$itemNews->id)}}" class="btn btn-primary text-white link-underline">{{__('Оновити')}}</a>
+                                          </div>
+                                          <div class="col-1">
+                                              <form action="{{route('admin.new.destroy', $itemNews)}}" method="post" enctype="multipart/form-data">
+                                                  @csrf
+                                                  @method('delete')
+                                                  <button class= "btn btn-danger" type="submit" onclick="return confirm('Ви видалите новину остаточно. Ви впевнені ?')">Видалити</button>
+                                              </form>
+                                          </div>
+                                          @endauth
+                                      </div>
+                              </td>
                          </tr>
                         @endforeach
                         </tbody>

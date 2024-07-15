@@ -28,8 +28,15 @@
 
                 <div class="col-6 mb-3">
                     <label for="image" class="form-label">{{ __('Фото') }}</label>
+
+                    @if ($itemNews->image)
+                        <div class="mb-2">
+                            <img src="{{ asset('storage/' . $itemNews->image) }}" alt="Current Image" style="max-width: 300px;">
+                        </div>
+                    @endif
+
                     <div class="input-group">
-                        <input type="file" class="form-control" id="image" name="image" required>
+                        <input type="file" class="form-control" id="image" name="image" value="{{ asset('storage/' . $itemNews->image) }}">
                     </div>
                     @error('image')
                     <div class="text-danger pb-2">{{ $message }}</div>
