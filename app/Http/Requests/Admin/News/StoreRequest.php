@@ -25,7 +25,7 @@ class StoreRequest extends FormRequest
                 'title' => ['required', 'string', 'max:255', 'unique:new,title'],
                 'content' => ['required', 'string'],
                 'image' => ['required', 'mimes:jpg,bmp,png,jpeg,webp,svg', 'max:2048'],
-                'tags' => ['required', 'string', 'regex:/^[\w+,]+$/u'],
+                'tags' => ['required', 'string', 'regex:/^[\w+\',]+$/u'],
                 'status_display' => ['required']
             ];
     }

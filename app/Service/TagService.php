@@ -37,7 +37,7 @@ class TagService
                 $idRelatedNews = $tag->new->id;
                 $urlForTag = route('new.show', ["new" => $idRelatedNews]);
                 $content = preg_replace(
-                    "/\b$tag->title\b/ui",
+                    "#\b$tag->title\b(?![^<]*</a>)#ui",
                     "<a href = '$urlForTag' > $0 </a>",
                     $content
                 );
@@ -55,7 +55,7 @@ class TagService
             });
             if(!empty($foundedNews)){
                 foreach ($foundedNews as $itemNews) {
-                    $itemNews->content = preg_replace("#<a [^<a]+ ($tag) </a>#ui",'$1', $itemNews->content);
+                    $itemNews->content = preg_replace("#<a [^<a]+ ($tag) </a>#ui","$1", $itemNews->content);
                     $itemNews->save();
                 }
             }
