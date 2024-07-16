@@ -37,8 +37,6 @@ class StoreController extends Controller
                 DB::rollBack();
             }
         }
-
-        session()->put('formData', $validatedData);
-        return back()->withErrors(['tags'=>"Не використовуйте ці теги, вони пов'язані з іншою новиною: ".implode(", ", $existingTags)]);
+        return back()->withErrors(['tags'=>"Не використовуйте ці теги, вони пов'язані з іншою новиною: ".implode(", ", $existingTags)])->withInput();
     }
 }

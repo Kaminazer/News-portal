@@ -19,7 +19,7 @@
                 @csrf
                 <div class="col-6 mb-3">
                     <label for="title" class="form-label">{{ __('Заголовок') }}</label>
-                    <input type="text" name="title" class="form-control" id="title" placeholder="Введіть заголовок" value="{{ old('formData')}}" required>
+                    <input type="text" name="title" class="form-control" id="title" placeholder="Введіть заголовок" value="{{ old('title')}}" required>
                     @error('title')
                     <div class="text-danger pb-2">{{ $message }}</div>
                     @enderror
