@@ -26,14 +26,14 @@ class UpdateRequest extends FormRequest
             'title' => ['required', 'string', 'max:255', Rule::unique('new','title')->ignore($this->new)],
             'content' => ['required', 'string'],
             'image' => ['mimes:jpg,bmp,png,jpeg,webp,svg', 'max:2048'],
-            'tags' => ['required', 'string', 'regex:/^[\w+,]+$/u'],
+            'tags' => ['required', 'string', 'regex:/^[\w+\',]+$/u'],
             'status_display' => ['required']
         ];
     }
     public function messages()
     {
         return [
-            'tags.regex' => 'Теги повинні бути введені через кому без пробілів',
+            'tags.regex' => 'Теги повинні бути введені через кому без пробілів та інших символім окрім апострофа',
         ];
     }
 }

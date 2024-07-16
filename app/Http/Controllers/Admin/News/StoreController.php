@@ -7,7 +7,9 @@ use App\Http\Requests\Admin\News\StoreRequest;
 use App\Models\News;
 use App\Models\TagsNews;
 use App\Service\TagService;
+use Exception;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class StoreController extends Controller
@@ -21,13 +23,22 @@ class StoreController extends Controller
         $convertedTags = explode(',',$validatedTags);
         $existingTags = $service->ifExist($convertedTags);
         if (empty($existingTags)){
-            $modifiedContent = $service->checkContent($validatedData['content']);
-            $validatedData['content'] = $modifiedContent;
-            $new = News::create($validatedData);
-            $service->createTag($convertedTags, $new);
-            $service->addLinks($convertedTags);
-            return redirect()->route('new.index');
+            DB::beginTransaction();
+            try {
+                $new = News::create($validatedData);
+                $service->createTag($convertedTags, $new);
+                $modifiedContent = $service->checkContent($validatedData['content']);
+                $new->content = $modifiedContent;
+                $new->save();
+                $service->addLinks($convertedTags, $new->id);
+                DB::commit();
+                return redirect()->route('new.index');
+            } catch (Exception $e) {
+                DB::rollBack();
+            }
         }
+
+        session()->put('formData', $validatedData);
         return back()->withErrors(['tags'=>"Не використовуйте ці теги, вони пов'язані з іншою новиною: ".implode(", ", $existingTags)]);
     }
 }

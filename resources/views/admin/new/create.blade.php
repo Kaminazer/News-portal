@@ -17,10 +17,9 @@
         <div class="pb-3">
             <form action="{{ route('admin.new.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
-
                 <div class="col-6 mb-3">
                     <label for="title" class="form-label">{{ __('Заголовок') }}</label>
-                    <input type="text" name="title" class="form-control" id="title" placeholder="Введіть заголовок" value="{{ old('title') }}" required>
+                    <input type="text" name="title" class="form-control" id="title" placeholder="Введіть заголовок" value="{{ old('formData')}}" required>
                     @error('title')
                     <div class="text-danger pb-2">{{ $message }}</div>
                     @enderror

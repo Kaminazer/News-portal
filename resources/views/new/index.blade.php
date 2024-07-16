@@ -4,8 +4,8 @@
         <div class="container">
             <h1 class="card-title text-center" data-aos="fade-up">{{__("Новини")}}</h1>
             @auth()
-                <div class="btn btn-primary">
-                    <a href="{{route('admin.new.create')}}" class="text-white link-underline"> {{__('Додати новину')}}</a>
+                <div>
+                    <a href="{{route('admin.new.create')}}" class=" btn btn-primary text-white link-underline"> {{__('Додати новину')}}</a>
                 </div>
             @endauth
             <section class=" pt-2 bg-body-tertiary">

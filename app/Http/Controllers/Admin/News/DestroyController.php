@@ -12,7 +12,7 @@ class DestroyController extends Controller
     public function __invoke(News $new, TagService $service): RedirectResponse
     {
         $tags = $new->tags->pluck('title')->toArray();
-        $service->deleteLinks($tags);
+        $service->deleteLinks($tags,$new->id);
         $new->delete();
         return redirect()->route('new.index');
     }

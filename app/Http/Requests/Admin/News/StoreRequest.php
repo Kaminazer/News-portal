@@ -32,7 +32,7 @@ class StoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'tags.regex' => 'Теги повинні бути введені через кому без пробілів',
+            'tags.regex' => 'Теги повинні бути введені через кому без пробілів та інших сторонніх символів окрім апострофа',
         ];
     }
 }

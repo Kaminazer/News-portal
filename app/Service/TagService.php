@@ -7,8 +7,8 @@ use App\Models\TagsNews;
 
 class TagService
 {
-    public function addLinks(array $tags){
-        $allNews = News::all('id', 'content')->flatten(1);
+    public function addLinks(array $tags, $id){
+        $allNews = News::WhereNotIn('id', [$id])->get()->flatten(1);
         foreach ($tags as $tag) {
             $instanceTag = TagsNews::where('title', $tag)->first();
             $foundedNews = $allNews->filter( function ($news) use ($tag) {
@@ -51,9 +51,9 @@ class TagService
         return $content;
     }
 
-    public function deleteLinks(array $deletedTags)
+    public function deleteLinks(array $deletedTags, $id)
     {
-        $allNews = News::all('id', 'content')->flatten(1);
+        $allNews = News::WhereNotIn('id', [$id])->get()->flatten(1);
         foreach ($deletedTags as $tag) {
             $foundedNews = $allNews->filter(function ($new) use ($tag) {
              return preg_match_all("/\b$tag\b/ui", $new->content, $matches);
