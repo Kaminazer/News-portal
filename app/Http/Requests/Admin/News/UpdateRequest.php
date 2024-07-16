@@ -33,7 +33,7 @@ class UpdateRequest extends FormRequest
     public function messages()
     {
         return [
-            'tags.regex' => 'Теги повинні бути введені через кому без пробілів та інших символім окрім апострофа',
+            'tags.regex' => 'Теги повинні бути введені через кому без пробілів та інших символів окрім апострофа',
         ];
     }
 }

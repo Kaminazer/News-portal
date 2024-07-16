@@ -20,7 +20,7 @@
                 @method('patch')
                 <div class="col-6 mb-3">
                     <label for="title" class="form-label">{{ __('Заголовок') }}</label>
-                    <input type="text" name="title" class="form-control" id="title" placeholder="Введіть заголовок" value="{{ $itemNews->title }}" required>
+                    <input type="text" name="title" class="form-control" id="title" placeholder="Введіть заголовок" value="{{ old('title') ? : $itemNews->title }}" required>
                     @error('title')
                     <div class="text-danger pb-2">{{ $message }}</div>
                     @enderror
@@ -36,7 +36,7 @@
                     @endif
 
                     <div class="input-group">
-                        <input type="file" class="form-control" id="image" name="image" value="{{ asset('storage/' . $itemNews->image) }}">
+                        <input type="file" class="form-control" id="image" name="image">
                     </div>
                     @error('image')
                     <div class="text-danger pb-2">{{ $message }}</div>
@@ -45,7 +45,7 @@
 
                 <div class="col-6 mb-3">
                     <label for="tags" class="form-label">{{ __('Теги') }}</label>
-                    <input type="text" name="tags" class="form-control" id="tags" placeholder="Введіть теги через кому, без пропусків" value="{{$tags}}" required>
+                    <input type="text" name="tags" class="form-control" id="tags" placeholder="Введіть теги через кому, без пропусків" value="{{old('tags') ? :$tags}}" required>
                     @error('tags')
                     <div class="text-danger pb-2">{{ $message }}</div>
                     @enderror
@@ -53,7 +53,7 @@
 
                 <div class=" col-6 mb-3">
                     <label for="summernote" class="form-label">{{ __('Текст новини') }}</label>
-                    <textarea id="summernote" name="content" required>{{ $itemNews->content }}</textarea>
+                    <textarea id="summernote" name="content" required>{{ old('content') ? : $itemNews->content }}</textarea>
                     @error('content')
                     <div class="text-danger pb-2">{{ $message }}</div>
                     @enderror
